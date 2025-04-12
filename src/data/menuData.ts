@@ -58,6 +58,20 @@ export const menuData: MenuCategory[] = [
     category: 'Drinks',
     products: [
       {
+        id: '1e20f2e4-9b88-4a01-9932-e15a7cf5d4e0',
+        name: 'Fanta',
+        description: 'Chilled 330ml can',
+        price: 1.5,
+        available: true
+      },
+      {
+        id: '2e20f2e4-9b88-4a01-9932-e15a7cf5d4e0',
+        name: 'Sprite',
+        description: 'Chilled 330ml can',
+        price: 1.5,
+        available: false
+      },
+      {
         id: '7e20f2e4-9b88-4a01-9932-e15a7cf5d4e0',
         name: 'Coca-Cola',
         description: 'Chilled 330ml can',

@@ -118,8 +118,11 @@ Good luck! 🚀
 
 ## 🧪 Resolved Tasks
 ### ✅ Must Have (Core Tasks)
+1. **Menu Display by Category**
 2. **Product Card**
 
 ## 📘 Bibliography
 - Product Card inspired by Pricing card: https://flowbite.com/docs/components/card/
 - Buttons: https://flowbite.com/docs/components/buttons/
+- Background: https://tailwindcss.com/docs/background-repeat
+
