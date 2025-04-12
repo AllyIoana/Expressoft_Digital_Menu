@@ -112,3 +112,14 @@ Please provide:
 - Keep it modular, readable, and maintainable.
 
 Good luck! 🚀
+
+
+# 🍽️ About my submission
+
+## 🧪 Resolved Tasks
+### ✅ Must Have (Core Tasks)
+2. **Product Card**
+
+## 📘 Bibliography
+- Product Card inspired by Pricing card: https://flowbite.com/docs/components/card/
+- Buttons: https://flowbite.com/docs/components/buttons/
