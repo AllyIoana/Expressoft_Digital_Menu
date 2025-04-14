@@ -21,6 +21,49 @@ const Menu = () => {
     }))
   }
 
+  /*-------------------------------------------------
+  --- Variables used for Order Summary management ---
+  -------------------------------------------------*/
+
+  /* --- Dictionary used to save the ordered products --- */
+  const [orderedProducts, setOrderedProducts] = useState(
+    Object.fromEntries(
+      menuData
+        .flatMap((category: MenuCategory) =>
+          category.products.map((product: Product) => product.id)
+        )
+        .map((productID: string) => [
+          productID,
+          {
+            categoryID: '',
+            product: '',
+            quantity: 0,
+            subtotal: 0
+          }
+        ])
+    )
+  )
+
+  /* --- Function used to add a product to order --- */
+  function addToOrder(categoryID: string, productID: string) {
+    const p: Product | undefined = menuData
+      .find((category: MenuCategory) => category.id == categoryID)
+      ?.products.find((product: Product) => product.id == productID)
+    if (p == undefined) {
+      return
+    }
+    const previousProduct = orderedProducts[productID]
+    setOrderedProducts({
+      ...orderedProducts,
+      [productID]: {
+        categoryID: categoryID,
+        product: p.name,
+        quantity: previousProduct.quantity + 1,
+        subtotal: previousProduct.subtotal + p.price
+      }
+    })
+  }
+
   return (
     <div className="min-h-screen bg-[url(/public/background.jpg)] bg-[length:auto_1300px] bg-top bg-repeat">
       {/* --- Menu Page title --- */}
@@ -113,12 +156,80 @@ const Menu = () => {
               </div>
               <div className="grid grid-cols-1 items-stretch gap-4 p-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {category.products.map((product: Product) => (
-                  <ProductCard key={product.id} product={product} />
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    onClick={() => addToOrder(category.id, product.id)}
+                  />
                 ))}
               </div>
             </div>
           )
         })}
+
+      {/*--------------------------
+      --- Order Summary Section ---
+      --------------------------*/}
+
+      <div className="min-h-screen bg-green-100 bg-top bg-repeat">
+        {/* --- Order Summary title --- */}
+        <div className="mt-6 flex items-center justify-center rounded-lg bg-green-100 p-6 text-3xl font-extrabold tracking-tight text-green-900  dark:bg-green-100 dark:text-green-900">
+          Order Summary
+        </div>
+
+        {/* --- Order Summary header --- */}
+        <div className="grid grid-cols-3 gap-5">
+          <span className="inline-flex w-full justify-center text-xl font-medium leading-tight text-green-900 dark:text-green-900">
+            Product
+          </span>
+          <span className="inline-flex w-full justify-center text-xl font-medium leading-tight text-green-900 dark:text-green-900">
+            Quantity
+          </span>
+          <span className="inline-flex w-full justify-center text-xl font-medium leading-tight text-green-900 dark:text-green-900">
+            Subtotal
+          </span>
+        </div>
+        <hr className="my-8 h-px border-0 bg-green-600 dark:bg-green-700"></hr>
+
+        {/* --- Order Summary content --- */}
+        {Object.keys(orderedProducts)
+          .filter((key: string) => orderedProducts[key].quantity > 0)
+          .map((key: string) => {
+            return (
+              <div key={key} className="my-5 grid grid-cols-3 gap-5">
+                <span className="inline-flex w-full justify-center font-medium leading-tight text-green-900 dark:text-green-900">
+                  {orderedProducts[key].product}
+                </span>
+                <span className="inline-flex w-full justify-center font-medium leading-tight text-green-900 dark:text-green-900">
+                  {orderedProducts[key].quantity}
+                </span>
+                <span className="inline-flex w-full justify-center font-medium leading-tight text-green-900 dark:text-green-900">
+                  ${orderedProducts[key].subtotal.toFixed(2)}
+                </span>
+              </div>
+            )
+          })}
+
+        {/* --- Order Summary footer --- */}
+        <hr className="my-8 h-px border-0 bg-green-600 dark:bg-green-700"></hr>
+        <div className="grid grid-cols-3 gap-5">
+          <span className="inline-flex w-full justify-center text-xl font-medium leading-tight text-green-900 dark:text-green-900">
+            Total
+          </span>
+          <span className="inline-flex w-full justify-center text-xl font-medium leading-tight text-green-900 dark:text-green-900"></span>
+          <span className="inline-flex w-full justify-center text-xl font-medium leading-tight text-green-900 dark:text-green-900">
+            $
+            {Object.keys(orderedProducts)
+              .map((key: string) => orderedProducts[key].subtotal)
+              .reduce(
+                (previousSum: number, currentSubtotal: number) =>
+                  previousSum + currentSubtotal,
+                0
+              )
+              .toFixed(2)}
+          </span>
+        </div>
+      </div>
     </div>
   )
 }
