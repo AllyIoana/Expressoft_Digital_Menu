@@ -36,7 +36,7 @@ function ProductCard(props: ProductCardProps) {
           type="button"
           className={`inline-flex w-full justify-center rounded-lg px-5 py-2.5 text-center text-sm font-medium focus:outline-none ${
             available
-              ? 'bg-green-600 text-white hover:bg-green-800 focus:ring-4 focus:ring-blue-200'
+              ? 'bg-green-600 text-white hover:bg-green-800 focus:ring-4 focus:ring-green-200'
               : 'cursor-not-allowed bg-green-800 text-white'
           }
           dark:focus:ring-green-900`}

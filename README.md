@@ -120,9 +120,20 @@ Good luck! 🚀
 ### ✅ Must Have (Core Tasks)
 1. **Menu Display by Category**
 2. **Product Card**
+3. **Filter by Category**
+
+### ✅ Bonus Tasks
+
+### 🚀 Extras
+- Added repeating background across all pages
+- Implemented a green color palette throughout the application
 
 ## 📘 Bibliography
 - Product Card inspired by Pricing card: https://flowbite.com/docs/components/card/
 - Buttons: https://flowbite.com/docs/components/buttons/
 - Background: https://tailwindcss.com/docs/background-repeat
-
+- Dropdown
+  - inspired by Dropdown hover: https://flowbite.com/docs/components/dropdowns/
+  - https://stackoverflow.com/questions/50802528/convert-js-array-to-dictionary-hashmap
+  - https://stackoverflow.com/questions/63122527/react-hooks-update-dictionary-state/63122564
+  - https://stackoverflow.com/questions/39224165/set-checkbox-value-in-react-js
