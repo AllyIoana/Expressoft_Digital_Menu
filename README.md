@@ -121,6 +121,7 @@ Good luck! 🚀
 1. **Menu Display by Category**
 2. **Product Card**
 3. **Filter by Category**
+4. **Toggle Product Availability page**
 5. **"Add to Order" Button and Order Summary**
 
 ### ✅ Bonus Tasks
@@ -142,3 +143,4 @@ Good luck! 🚀
   - https://stackoverflow.com/questions/63122527/react-hooks-update-dictionary-state/63122564
   - https://stackoverflow.com/questions/39224165/set-checkbox-value-in-react-js
 - Search bar: https://flowbite.com/docs/forms/input-field/
+- LocalStorage: https://blog.logrocket.com/using-localstorage-react-hooks/

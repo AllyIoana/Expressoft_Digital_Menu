@@ -65,7 +65,33 @@ const Menu = () => {
     })
   }
 
+  /*------------------------------------------
+  --- Variables used for searching by name ---
+  --------------------------------------------*/
   const [searchText, setSearchText] = useState('')
+
+  /*--------------------------------------------------------
+  --- Variables used for product availability management ---
+  ----------------------------------------------------------*/
+  const [productAvailability] = useState(() => {
+    const availability = localStorage.getItem('productAvailability') ?? ''
+    if (availability != '') return JSON.parse(availability)
+    else {
+      const newAvailability = Object.fromEntries(
+        menuData.flatMap((category: MenuCategory) =>
+          category.products.map((product: Product) => [
+            product.id,
+            product.available
+          ])
+        )
+      )
+      localStorage.setItem(
+        'productAvailability',
+        JSON.stringify(newAvailability)
+      )
+      return newAvailability
+    }
+  })
 
   return (
     <div className="min-h-screen bg-[url(/public/background.jpg)] bg-[length:auto_1300px] bg-top bg-repeat">
@@ -271,6 +297,7 @@ const Menu = () => {
                     <ProductCard
                       key={product.id}
                       product={product}
+                      availability={productAvailability[product.id]}
                       onClick={() => addToOrder(category.id, product.id)}
                     />
                   ))}
