@@ -3,10 +3,15 @@ import { Product } from 'data/menuData'
 interface ProductCardProps {
   product: Product
   onClick: () => void
+  availability: boolean
 }
 
 function ProductCard(props: ProductCardProps) {
-  const { name, description, price, available } = props.product
+  const { name, description, price } = props.product
+
+  /* Added controllable availability */
+  const available = props.availability
+
   return (
     <div className="m-2 h-full">
       <div className="size-full max-w-sm rounded-lg border border-green-200 bg-white p-4 shadow-sm sm:p-8 dark:border-green-600 dark:bg-green-900">
@@ -41,7 +46,7 @@ function ProductCard(props: ProductCardProps) {
               : 'cursor-not-allowed bg-green-800 text-white'
           }
           dark:focus:ring-green-900`}
-          onClick={props.onClick}
+          onClick={available ? props.onClick : () => {}}
         >
           Add to Order
         </button>
