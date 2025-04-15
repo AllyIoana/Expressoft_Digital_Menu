@@ -123,6 +123,7 @@ Good luck! 🚀
 3. **Filter by Category**
 4. **Toggle Product Availability page**
 5. **"Add to Order" Button and Order Summary**
+6. **Welcoming home page**
 
 ### ✅ Bonus Tasks
 1. **Search bar**
