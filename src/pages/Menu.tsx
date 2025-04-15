@@ -13,7 +13,8 @@ const Menu = () => {
       menuData.map((category: MenuCategory) => [category.category, true])
     )
   )
-
+  const [sortOpenDropdown, setSortOpenDropdown] = useState(false)
+  const [sortAscending, setSortAscending] = useState(true)
   function changeDropdownValue(key: string) {
     setDropdownValues((dropdownValues) => ({
       ...dropdownValues,
@@ -64,6 +65,8 @@ const Menu = () => {
     })
   }
 
+  const [searchText, setSearchText] = useState('')
+
   return (
     <div className="min-h-screen bg-[url(/public/background.jpg)] bg-[length:auto_1300px] bg-top bg-repeat">
       {/* --- Menu Page title --- */}
@@ -74,11 +77,23 @@ const Menu = () => {
         </div>
       </div>
 
-      {/*--------------------------------
-      --- Filter by Category dropdown ---
-      --------------------------------*/}
-
       <div className="mt-2 flex justify-center text-5xl text-green-900 dark:text-green-900">
+        {/*---------------
+        --- Search bar ---
+        ------------------*/}
+        <div className="p-2">
+          <input
+            type="text"
+            id="default-input"
+            className="mt-4 block w-full rounded-lg border border-gray-300 bg-gray-50 px-5 py-3 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            placeholder="Search..."
+            value={searchText}
+            onChange={(event) => setSearchText(event.target.value)}
+          />
+        </div>
+        {/*--------------------------------
+        --- Filter by Category dropdown ---
+        --------------------------------*/}
         <div className="p-2">
           {/*Dropdown: button*/}
           <button
@@ -140,6 +155,89 @@ const Menu = () => {
             </ul>
           </div>
         </div>
+        {/*---------------------------
+        --- Sort Products dropdown ---
+        ------------------------------*/}
+        <div className="p-2">
+          {/*Dropdown: button*/}
+          <button
+            id="sortDropdownBgHoverButton"
+            onClick={() => setSortOpenDropdown(!sortOpenDropdown)}
+            className="inline-flex items-center rounded-lg bg-green-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-200 dark:bg-green-600 dark:hover:bg-green-800 dark:focus:ring-green-800"
+            type="button"
+          >
+            Sort by...
+            <svg
+              className="ms-3 size-2.5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 10 6"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="m1 1 4 4 4-4"
+              />
+            </svg>
+          </button>
+
+          {/*Dropdown: list of elements*/}
+          <div
+            id="sortDropdownBgHover"
+            className={`absolute z-10 w-48 rounded-lg bg-white shadow-sm dark:bg-green-900 ${
+              sortOpenDropdown ? '' : 'hidden'
+            }`}
+          >
+            <ul
+              className="space-y-1 p-3 text-sm text-green-700 dark:text-green-200"
+              aria-labelledby="sortDropdownBgHoverButton"
+            >
+              <li>
+                <div className="flex items-center rounded-sm p-2 hover:bg-green-200 dark:hover:bg-green-800">
+                  <input
+                    id="ASC"
+                    type="checkbox"
+                    onChange={() => {
+                      setSortAscending(true)
+                      setSortOpenDropdown(false)
+                    }}
+                    checked={sortAscending}
+                    className="size-4 rounded-sm border-green-200 bg-green-200 text-green-600"
+                  />
+                  <label
+                    htmlFor="ASC"
+                    className="ms-2 w-full rounded-sm text-sm font-medium text-green-900 dark:text-green-200"
+                  >
+                    Sort by: price ascending
+                  </label>
+                </div>
+              </li>
+              <li>
+                <div className="flex items-center rounded-sm p-2 hover:bg-green-200 dark:hover:bg-green-800">
+                  <input
+                    id="DESC"
+                    type="checkbox"
+                    onChange={() => {
+                      setSortAscending(false)
+                      setSortOpenDropdown(false)
+                    }}
+                    checked={!sortAscending}
+                    className="size-4 rounded-sm border-green-200 bg-green-200 text-green-600"
+                  />
+                  <label
+                    htmlFor="DESC"
+                    className="ms-2 w-full rounded-sm text-sm font-medium text-green-900 dark:text-green-200"
+                  >
+                    Sort by: price descending
+                  </label>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       {/*-----------------------------
@@ -155,13 +253,27 @@ const Menu = () => {
                 {category.category}
               </div>
               <div className="grid grid-cols-1 items-stretch gap-4 p-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {category.products.map((product: Product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    onClick={() => addToOrder(category.id, product.id)}
-                  />
-                ))}
+                {category.products
+                  .filter(
+                    (product: Product) =>
+                      searchText.length == 0 ||
+                      product.name
+                        .toLowerCase()
+                        .indexOf(searchText.toLowerCase()) >= 0
+                  )
+                  .sort((productA: Product, productB: Product) => {
+                    if (productA.price == productB.price) return 0
+                    if (productA.price < productB.price)
+                      return sortAscending ? -1 : 1
+                    else return sortAscending ? 1 : -1
+                  })
+                  .map((product: Product) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      onClick={() => addToOrder(category.id, product.id)}
+                    />
+                  ))}
               </div>
             </div>
           )
@@ -171,7 +283,7 @@ const Menu = () => {
       --- Order Summary Section ---
       --------------------------*/}
 
-      <div className="min-h-screen bg-green-100 bg-top bg-repeat">
+      <div className="bg-green-100 bg-top bg-repeat pb-20">
         {/* --- Order Summary title --- */}
         <div className="mt-6 flex items-center justify-center rounded-lg bg-green-100 p-6 text-3xl font-extrabold tracking-tight text-green-900  dark:bg-green-100 dark:text-green-900">
           Order Summary

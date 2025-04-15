@@ -121,8 +121,12 @@ Good luck! 🚀
 1. **Menu Display by Category**
 2. **Product Card**
 3. **Filter by Category**
+5. **"Add to Order" Button and Order Summary**
 
 ### ✅ Bonus Tasks
+1. **Search bar**
+2. **Sort dropdown: price ascending/descending**
+3. **Responsive layout**
 
 ### 🚀 Extras
 - Added repeating background across all pages
@@ -137,3 +141,4 @@ Good luck! 🚀
   - https://stackoverflow.com/questions/50802528/convert-js-array-to-dictionary-hashmap
   - https://stackoverflow.com/questions/63122527/react-hooks-update-dictionary-state/63122564
   - https://stackoverflow.com/questions/39224165/set-checkbox-value-in-react-js
+- Search bar: https://flowbite.com/docs/forms/input-field/
