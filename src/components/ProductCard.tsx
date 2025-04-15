@@ -2,6 +2,7 @@ import { Product } from 'data/menuData'
 
 interface ProductCardProps {
   product: Product
+  onClick: () => void
 }
 
 function ProductCard(props: ProductCardProps) {
@@ -40,6 +41,7 @@ function ProductCard(props: ProductCardProps) {
               : 'cursor-not-allowed bg-green-800 text-white'
           }
           dark:focus:ring-green-900`}
+          onClick={props.onClick}
         >
           Add to Order
         </button>
